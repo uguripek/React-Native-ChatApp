@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
-import colorsys from 'colorsys'
+import colorsys from 'colorsys';
+import PropTypes from 'prop-types';
 
-function MessageBubble ({ icon, name, message, bubbleColor }) {
+export default  function MessageBubble ({ icon, name, message, bubbleColor }) {
 
     function converComplementary(bubbleColors) {
         const r = colorsys.hex2Rgb(bubbleColors).b
@@ -12,11 +13,26 @@ function MessageBubble ({ icon, name, message, bubbleColor }) {
     }
 
     return (
-      <View style={{ backgroundColor: bubbleColor, marginTop: 25 }}>
-        <Text style={{ color: converComplementary(bubbleColor), fontSize: 18 }}> {icon} → {name} </Text>
-    <Text style={{ color: converComplementary(bubbleColor), fontSize: 16 }}> {message} {converComplementary(bubbleColor)}</Text>
+      <View style={{
+        flexDirection: 'column', width: 200, alignItems: 'flex-start',
+        padding: 8, backgroundColor: bubbleColor, borderRadius: 8,marginBottom : 10,marginTop : 10,marginLeft : 5,marginRight : 5
+    }}>
+        <Text style={{ color: converComplementary(bubbleColor), marginBottom: 5 }} >{icon} {name}</Text>
+        <Text style={{ color: converComplementary(bubbleColor), marginBottom: 5 }}> > {message}</Text>
+    
       </View>
     );
 }
 
-export default MessageBubble;
+MessageBubble.propTypes = {
+  icon: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  message: PropTypes.string.isRequired,
+  bubbleColor: PropTypes.string.isRequired
+}
+
+
+MessageBubble.defaultProps = {
+  bubbleColor: '#000000',
+  message: 'none'
+}
